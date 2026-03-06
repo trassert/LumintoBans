@@ -1,5 +1,3 @@
-Вот переведенная и адаптированная версия README на русский язык:
-
 <div align="center">
   <img style="width:100px;" src="https://cdn.yosoyvillaa.dev/uploads/next-litebans.png" alt="MelodyMine Logo">
 
