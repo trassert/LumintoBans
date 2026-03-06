@@ -1,7 +1,7 @@
 <div align="center">
   <img style="width:100px;" src="https://cdn.yosoyvillaa.dev/uploads/next-litebans.png" alt="MelodyMine Logo">
 
-  <h1 style="font-size: 38px">next-litebans </h1>
+  <h1 style="font-size: 38px">Luminto-Litebans </h1>
 
   A web interface for [LiteBans](https://www.spigotmc.org/resources/litebans.3715/), built on top of:
 
@@ -10,7 +10,7 @@
 
 ## 👾 Demo
 
-You can view a demo of the project [here](https://next-litebans.yosoyvillaa.dev/). 
+You can view a demo of the project lumintomc.ru/bans
 
 _P.D: All punishments in the demo are randomly added to the database with a list of random premium player names as punished players, and with a predefined list of reasons._
 
