@@ -1,42 +1,42 @@
+Вот переведенная и адаптированная версия README на русский язык:
+
 <div align="center">
   <img style="width:100px;" src="https://cdn.yosoyvillaa.dev/uploads/next-litebans.png" alt="MelodyMine Logo">
 
-  <h1 style="font-size: 38px">Luminto-Litebans </h1>
+  <h1 style="font-size: 38px">Luminto-Litebans</h1>
 
-  A web interface for [LiteBans](https://www.spigotmc.org/resources/litebans.3715/), built on top of:
+  Веб-интерфейс для [LiteBans](https://www.spigotmc.org/resources/litebans.3715/), созданный на базе:
 
   [![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/) [![Prisma](https://img.shields.io/badge/Prisma-black?style=for-the-badge&logo=prisma&logoColor=white)](https://prisma.io/) [![shadcn/ui](https://cdn.yosoyvillaa.dev/uploads/shadcn.svg)](https://ui.shadcn.com/)
 </div>
 
-## 👾 Demo
+## 👾 Демо
 
-You can view a demo of the project https://lumintomc.ru/bans
+Посмотреть демо-версию проекта можно [здесь](https://lumintomc.ru/bans).
 
-_P.D: All punishments in the demo are randomly added to the database with a list of random premium player names as punished players, and with a predefined list of reasons._
+## 🚀 Развертывание
 
-## 🚀 Deployment
+### Требования
 
-### Prerequisites
+- Node.js версии v20.x или выше
+- Работающий LiteBans на MySQL, MariaDB или PostgreSQL
 
-- Node.js v20.x or higher
-- Litebans working on MySQL, MariaDB or PostgreSQL
+### Установка
 
-### Installation
+1. Клонируйте репозиторий: `git clone https://github.com/trassert/LumintoBans.git`
+2. Установите зависимости: `npm install`
+3. Скопируйте файл `.env.example` в `.env` и заполните необходимые поля. За помощью обратитесь к разделу [URL базы данных](#url-базы-данных).
+4. Если вы используете PostgreSQL, ознакомьтесь с разделом [Настройка PostgreSQL](#настройка-postgresql).
+5. Настройте сайт ([конфигурация](#️-конфигурация)).
+6. Выполните `npm run setup:db:generate` для генерации клиента Prisma.
+7. Выполните `npm run build` для сборки проекта.
+8. Выполните `npm run start` для запуска сервера.
 
-1. Clone the repository with `git clone https://github.com/YoSoyVillaa/next-litebans.git`
-2. Install the dependencies with `npm install`
-3. Copy the `.env.example` file to `.env` and fill in the required fields. For help [check this](#database-url)
-4. If you are using PostgreSQL, check [PostgresSQL Configuration](#PostgresSQL-Configuration)
-5. Config the website ([configuration](#%EF%B8%8F-configuration))
-6. Run `npm run setup:db:generate` to generate the Prisma client
-7. Run `npm run build` to build the project
-8. Run `npm run start` to start the server
+### URL базы данных
 
-### Database URL
+Необходимо установить переменную окружения `DATABASE_URL` в файле `.env`. Примеры подключения для MySQL и PostgreSQL:
 
-You will need to set the `DATABASE_URL` environment variable in the `.env` file. If you don't know the URL template, you can check the following examples for both MySQL and PostgreSQL:
-
-#### MySQL URL Configuration
+#### Настройка URL для MySQL
 
 ![MySQL](https://cdn.yosoyvillaa.dev/uploads/mysql.png)
 
@@ -44,7 +44,7 @@ You will need to set the `DATABASE_URL` environment variable in the `.env` file.
 DATABASE_URL="mysql://user:password@host:port/database"
 ```
 
-#### PostgreSQL URL Configuration
+#### Настройка URL для PostgreSQL
 
 ![PostgreSQL](https://cdn.yosoyvillaa.dev/uploads/postgresql.png)
 
@@ -52,9 +52,9 @@ DATABASE_URL="mysql://user:password@host:port/database"
 DATABASE_URL="postgresql://user:password@host:port/database?schema=public"
 ```
 
-### PostgresSQL Configuration
+### Настройка PostgreSQL
 
-If you are using PostgreSQL, you need to delete all the **models** in the `prisma/schema.prisma` file and change the `provider` to `postgresql`, or replace the file content with:
+Если вы используете PostgreSQL, удалите все **модели** в файле `prisma/schema.prisma` и измените `provider` на `postgresql`, либо замените содержимое файла на:
 
 ```prisma
 generator client {
@@ -67,23 +67,23 @@ datasource db {
 }
 ```
 
-Update the URL in the `.env` file with the PostgreSQL connection string.
+Обновите URL в файле `.env` строкой подключения к PostgreSQL.
 
-Then, run `npm run setup:db:pull` to pull the database schema.
+Затем выполните `npm run setup:db:pull` для получения схемы базы данных.
 
-## 🛠️ Configuration
+## 🛠️ Конфигурация
 
-You can configure any website option on `config/site.ts`, such as the page title, icon, and more.
+Любые параметры сайта (заголовок страницы, иконка и др.) можно настроить в файле `config/site.ts`.
 
-### 🖼️ Images
+### 🖼️ Изображения
 
-You can place the images in the `public/` folder, then you can use them in the website with the `/` path. But, if you want to use an external link images, you will need to add the following config to the `next.config.js` file:
+Изображения можно разместить в папке `public/` и использовать на сайте через путь `/`. Для использования внешних ссылок на изображения добавьте следующую конфигурацию в `next.config.js`:
 
 ```js
 const nextConfig = {
   images: {
     remotePatterns: [
-      // One object for each domain
+      // Один объект для каждого домена
       {
         protocol: 'https',
         hostname: 'domain.example',
@@ -93,20 +93,17 @@ const nextConfig = {
 };
 ```
 
-### 🌍 Internacionalization
+### 🌍 Интернационализация
 
-To configure the available languages, you can edit the `config/site.ts` file, modifying the `languages` object, then, you can edit existing translations in the `language/` folder, or create new ones copying the existing ones and changing the values.
+Чтобы настроить доступные языки, отредактируйте объект `languages` в файле `config/site.ts`. Затем вы можете изменить существующие переводы в папке `language/` или создать новые, скопировав существующие файлы и изменив значения.
 
-### 👤 Bedrock compatibility
+### 👤 Совместимость с Bedrock
 
-If your server allow Bedrock players through [Geyser](https://github.com/GeyserMC/Geyser) and/or [Floodgate](https://github.com/GeyserMC/Floodgate), you can enable the Bedrock compatibility mode in the `config/site.ts` file, setting the `bedrock` property to `true`. Then, configure the name prefix for Bedrock players, to replace the skins with the default Steve skin.
+Если ваш сервер поддерживает игроков Bedrock через [Geyser](https://github.com/GeyserMC/Geyser) и/или [Floodgate](https://github.com/GeyserMC/Floodgate), включите режим совместимости в файле `config/site.ts`, установив свойство `bedrock` в `true`. Также настройте префикс имен для игроков Bedrock, чтобы заменить их скины на стандартный скин Стива.
 
 ```js
   bedrock: {
     enabled: true,
-    prefix: "BP_", // Prefix for Bedrock players
+    prefix: "BP_", // Префикс для игроков Bedrock
   },
 ```
-
-> [!WARNING]
-> If you are using a special character for your Bedrock players, such as ``*.+?^${}()|[\]\\``, etc., you will need to enter ``src/utils/bedrock.ts``, and change the line 13 to ``const bedrockPrefixRegex = new RegExp(`^\\${siteConfig.bedrock.prefix}`);``, escaping the special character with a double backslash.
