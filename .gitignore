@@ -1,64 +1,35 @@
-```gitignore
-# Dependencies
-node_modules/
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
 
-# Build outputs
-dist/
-build/
-.next/
-out/
+# testing
+/coverage
 
-# Environment variables
-.env
-.env.local
-.env.*
+# next.js
+/.next/
+/out/
 
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-.venv/
-pip-log.txt
-pip-delete-this-directory.txt
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.log
+# production
+/build
 
-# Logs
-*.log
-
-# OS generated files
+# misc
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+*.pem
 
-# Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Testing
-coverage/
-htmlcov/
-.pytest_cache/
-.mypy_cache/
-```
+# local env files
+.env*.local
+.env
 
-Wait, let me reconsider. Looking at the modified files, they are all TypeScript/React source files (.tsx) and utility files in a punishment system. There are no build artifacts, dependency directories, or temporary files in the change list. The changes are purely source code modifications.
+# vercel
+.vercel
 
-(empty)
+# typescript
+*.tsbuildinfo
+next-env.d.ts
