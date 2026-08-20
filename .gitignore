@@ -2,21 +2,18 @@
 # Dependencies
 node_modules/
 
-# Build outputs
-dist/
-build/
-.next/
-out/
+# testing
+/coverage
 
 # Environment variables
 .env
 .env.local
 *.env.*
 
-# Logs
-*.log
+# production
+/build
 
-# OS generated files
+# misc
 .DS_Store
 Thumbs.db
 
