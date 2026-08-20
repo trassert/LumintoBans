@@ -16,8 +16,8 @@ export const PlayerAvatar = ({
   className
 }: PlayerAvatarProps) => (
   <Image 
-    src={`https://minotar.net/helm/${uuid ?? name}`}
-    alt={`${name}'s avatar`}
+    src={`https://minotar.net/helm/${name ?? uuid}`}
+    alt={`Аватар`}
     width={size ?? 32}
     height={size ?? 32}
     className={cn("mx-auto rounded-sm", className)}

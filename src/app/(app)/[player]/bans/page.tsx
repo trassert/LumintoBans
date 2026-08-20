@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: { player: string } 
       player: params.player.replace("%40", '')
     }),
     openGraph: {
-      images: `https://minotar.net/helm/${player.uuid}`,
+      images: `https://minotar.net/helm/${player.name}`,
       description: p(siteConfig.openGraph.pages.player.bans.description, {
         name: player.name,
         total: banCount
@@ -67,7 +67,7 @@ export default async function Bans({
     notFound();
   }
 
-  const staff = getStaff({searchParams});
+  const staff = await getStaff({searchParams});
 
   const banCount = await getPlayerBanCount(player.uuid!);
   const muteCount = await getPlayerMuteCount(player.uuid!);
@@ -79,7 +79,7 @@ export default async function Bans({
       <div className="space-y-2 md:flex md:space-x-4">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img 
-          src={`https://visage.surgeplay.com/bust/512/${getSkinUUID(playerName, player.uuid!)}`} 
+          src={`https://visage.surgeplay.com/bust/512/${playerName}`} 
           alt={playerName}
           width={192}
           height={192}

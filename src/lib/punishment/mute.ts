@@ -4,14 +4,14 @@ import { siteConfig } from "@config/site";
 import { PunishmentListItem } from "@/types";
 
 import { db } from "../db";
-import { getPlayerName } from "./punishment";
+import { getPlayerName, getStaffFilter } from "./punishment";
 import { Dictionary } from "../language/types";
 
 const getMuteCount = async (player?: string, staff?: string) => {
   const count = await db.litebans_mutes.count({
     where: {
       uuid: player,
-      banned_by_uuid: staff
+      ...getStaffFilter(staff)
     }
   });
   return count;
@@ -21,7 +21,7 @@ const getMutes = async (page: number, player?: string, staff?: string) => {
   const mutes =  await db.litebans_mutes.findMany({
     where: {
       uuid: player,
-      banned_by_uuid: staff
+      ...getStaffFilter(staff)
     },
     take: 10,
     skip: (page - 1) * 10,

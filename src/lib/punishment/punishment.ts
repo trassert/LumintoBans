@@ -4,30 +4,35 @@ import { PunishmentListItem } from "@/types";
 
 import { db } from "../db";
 import { Dictionary } from "../language/types";
+import { isUuid } from "@/utils/searchParams";
+
+const getStaffFilter = (staff?: string) => staff
+  ? isUuid(staff) ? { banned_by_uuid: staff } : { banned_by_name: staff }
+  : {};
 
 const getPunishmentCount = async (player?: string, staff?: string) => {
   const bans = await db.litebans_bans.count({
     where: {
       uuid: player,
-      banned_by_uuid: staff
+      ...getStaffFilter(staff)
     }
   });
   const mutes = await db.litebans_mutes.count({
     where: {
       uuid: player,
-      banned_by_uuid: staff
+      ...getStaffFilter(staff)
     }
   });
   const warns = await db.litebans_warnings.count({
     where: {
       uuid: player,
-      banned_by_uuid: staff
+      ...getStaffFilter(staff)
     }
   });
   const kicks = await db.litebans_kicks.count({
     where: {
       uuid: player,
-      banned_by_uuid: staff
+      ...getStaffFilter(staff)
     }
   });
 
@@ -51,14 +56,19 @@ const getPlayerName = async (uuid: string) => {
 }
 
 const getPunishments = async (page: number, player?: string, staff?: string) => {
+  const staffFilter = staff && isUuid(staff)
+    ? Prisma.sql` banned_by_uuid = ${staff}`
+    : staff
+      ? Prisma.sql` banned_by_name = ${staff}`
+      : Prisma.sql``;
   const query = Prisma.sql`
-  SELECT id, uuid, banned_by_name, banned_by_uuid, reason, time, until, active, 'ban' AS type FROM litebans_bans ${player || staff ? Prisma.sql`WHERE ` : Prisma.sql``}${player ? Prisma.sql` uuid = ${player} ` : Prisma.sql``} ${player && staff ? Prisma.sql`AND` : Prisma.sql``} ${staff ? Prisma.sql` banned_by_uuid = ${staff}` : Prisma.sql``}
+  SELECT id, uuid, banned_by_name, banned_by_uuid, reason, time, until, active, 'ban' AS type FROM litebans_bans ${player || staff ? Prisma.sql`WHERE ` : Prisma.sql``}${player ? Prisma.sql` uuid = ${player} ` : Prisma.sql``} ${player && staff ? Prisma.sql`AND` : Prisma.sql``}${staffFilter}
   UNION ALL 
-  SELECT id, uuid, banned_by_name, banned_by_uuid, reason, time, until, active, 'mute' AS type FROM litebans_mutes ${player || staff ? Prisma.sql`WHERE ` : Prisma.sql``}${player ? Prisma.sql` uuid = ${player} ` : Prisma.sql``} ${player && staff ? Prisma.sql`AND` : Prisma.sql``} ${staff ? Prisma.sql` banned_by_uuid = ${staff}` : Prisma.sql``}
+  SELECT id, uuid, banned_by_name, banned_by_uuid, reason, time, until, active, 'mute' AS type FROM litebans_mutes ${player || staff ? Prisma.sql`WHERE ` : Prisma.sql``}${player ? Prisma.sql` uuid = ${player} ` : Prisma.sql``} ${player && staff ? Prisma.sql`AND` : Prisma.sql``}${staffFilter}
   UNION ALL 
-  SELECT id, uuid, banned_by_name, banned_by_uuid, reason, time, until, active, 'warn' AS type FROM litebans_warnings ${player || staff ? Prisma.sql`WHERE ` : Prisma.sql``}${player ? Prisma.sql` uuid = ${player} ` : Prisma.sql``} ${player && staff ? Prisma.sql`AND` : Prisma.sql``} ${staff ? Prisma.sql` banned_by_uuid = ${staff}` : Prisma.sql``}
+  SELECT id, uuid, banned_by_name, banned_by_uuid, reason, time, until, active, 'warn' AS type FROM litebans_warnings ${player || staff ? Prisma.sql`WHERE ` : Prisma.sql``}${player ? Prisma.sql` uuid = ${player} ` : Prisma.sql``} ${player && staff ? Prisma.sql`AND` : Prisma.sql``}${staffFilter}
   UNION ALL 
-  SELECT id, uuid, banned_by_name, banned_by_uuid, reason, time, until, active, 'kick' AS type FROM litebans_kicks ${player || staff ? Prisma.sql`WHERE ` : Prisma.sql``}${player ? Prisma.sql` uuid = ${player} ` : Prisma.sql``} ${player && staff ? Prisma.sql`AND` : Prisma.sql``} ${staff ? Prisma.sql` banned_by_uuid = ${staff}` : Prisma.sql``}
+  SELECT id, uuid, banned_by_name, banned_by_uuid, reason, time, until, active, 'kick' AS type FROM litebans_kicks ${player || staff ? Prisma.sql`WHERE ` : Prisma.sql``}${player ? Prisma.sql` uuid = ${player} ` : Prisma.sql``} ${player && staff ? Prisma.sql`AND` : Prisma.sql``}${staffFilter}
   ORDER BY time DESC
   LIMIT 10
   OFFSET ${(page - 1) * 10}
@@ -95,4 +105,4 @@ const sanitizePunishments = async (dictionary: Dictionary, punishments: Punishme
   return sanitized;
 }
 
-export { getPunishmentCount, getPlayerName, getPunishments, sanitizePunishments }
+export { getPunishmentCount, getPlayerName, getPunishments, sanitizePunishments, getStaffFilter }

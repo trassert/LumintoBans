@@ -1,26 +1,25 @@
 export const siteConfig = {
-  title: "Next Litebans",
+  title: "Люминт - Баны",
   logo: "/logo.webp",
   favicon: "/logo.webp",
   languages: {
     available: [
-      "en",
-      "es",
+      "ru",
     ],
-    default: "en",
+    default: "ru",
   },
   console: {
-    name: "Console", // Just for filter badge
+    name: "Консоль", // Just for filter badge
     uuid: "[Console]", // Use for filter url and to check if a punishment is made from the Console. In some versions of Litebans, the console uuid is "CONSOLE".
     icon: "/console.webp",
     body: "/console-body.webp",
     bust: "/console-bust.webp",
   },
-  defaultPlayerLookup: "YoSoyVilla",
+  defaultPlayerLookup: "Trassert",
   // When enabled, body and bust images will show a steve skin
   bedrock: {
     enabled: false,
-    prefix: "BP_",
+    prefix: "",
   },
   openGraph: {
     dateFormat: "yyyy-MM-dd hh:mm:ss",
@@ -28,126 +27,126 @@ export const siteConfig = {
       main: {
         // Placeholders: {total}, {bans}, {mutes}, {kicks}, {warns}
         description: `
-        next-litebans punishment web interface.
+        Веб-интерфейс наказаний.
 
-        Total punishments: {total}
+        Всего наказаний: {total}
 
-          🚫 Bans: {bans}
-          🔇 Mutes: {mutes}
-          ⚠️ Warns: {warns}
-          ❌ Kicks: {kicks}
+          🚫 Баны: {bans}
+          🔇 Муты: {mutes}
+          ⚠️ Варны: {warns}
+          ❌ Кики: {kicks}
         `
       },
       history: {
         // Placeholders: {total}, {bans}, {mutes}, {kicks}, {warns}
         description: `
-        Total punishments: {total}
+        Всего наказаний: {total}
 
-          🚫 Bans: {bans}
-          🔇 Mutes: {mutes}
-          ⚠️ Warns: {warns}
-          ❌ Kicks: {kicks}
+          🚫 Баны: {bans}
+          🔇 Муты: {mutes}
+          ⚠️ Варны: {warns}
+          ❌ Кики: {kicks}
         `
       },
       player: {
         // Placeholders: {name}, {total}, {bans}, {mutes}, {kicks}, {warns}
         description: `
-        {name}'s punishments.
+        Наказания игрока {name}.
 
-        Total punishments: {total}
+        Всего наказаний: {total}
 
-          🚫 Bans: {bans}
-          🔇 Mutes: {mutes}
-          ⚠️ Warns: {warns}
-          ❌ Kicks: {kicks}
+          🚫 Баны: {bans}
+          🔇 Муты: {mutes}
+          ⚠️ Варны: {warns}
+          ❌ Кики: {kicks}
         `,
         bans: {
           description: `
-          {name}'s bans.
+          Баны игрока {name}.
 
-          Total bans: {total}
+          Всего банов: {total}
           `,
         },
         mutes: {
           description: `
-          {name}'s mutes.
+          Муты игрока {name}.
 
-          Total mutes: {total}
+          Всего мутов: {total}
           `,
         },
         warns: {
           description: `
-          {name}'s warns.
+          Варны игрока {name}.
 
-          Total warns: {total}
+          Всего варнов: {total}
           `,
         },
         kicks: {
           description: `
-          {name}'s kicks.
+          Кики игрока {name}.
 
-          Total kicks: {total}
+          Всего киков: {total}
           `,
         },
       },
       bans: {
         // Placeholders: {total}
-        description: "Total bans: {total}"
+        description: "Всего банов: {total}"
       },
       mutes: {
         // Placeholders: {total}
-        description: "Total mutes: {total}"
+        description: "Всего мутов: {total}"
       },
       warns: {
         // Placeholders: {total}
-        description: "Total warns: {total}"
+        description: "Всего варнов: {total}"
       },
       kicks: {
         // Placeholders: {total}
-        description: "Total kicks: {total}"
+        description: "Всего киков: {total}"
       },
     },
     punishments: {
       ban: {
         // Placeholders: {name}, {staff}, {reason}, {time}, {duration}, {server}
         description: `
-        👤 User: {name}
-        👮 Staff: {staff}
+        👤 Игрок: {name}
+        👮 Персонал: {staff}
 
-        📜 Reason: {reason}
-        🕒 Date: {time}
-        ⌛ Duration: {duration}
+        📜 Причина: {reason}
+        🕒 Дата: {time}
+        ⌛ Длительность: {duration}
         `
       },
       mute: {
         // Placeholders: {name}, {staff}, {reason}, {time}, {duration}, {server}
         description: `
-        👤 User: {name}
-        👮 Staff: {staff}
+        👤 Игрок: {name}
+        👮 Персонал: {staff}
 
-        📜 Reason: {reason}
-        🕒 Date: {time}
-        ⌛ Duration: {duration}
+        📜 Причина: {reason}
+        🕒 Дата: {time}
+        ⌛ Длительность: {duration}
         `
       },
       warn: {
         // Placeholders: {name}, {staff}, {reason}, {time}, {server}
         description: `
-        👤 User: {name}
-        👮 Staff: {staff}
+        👤 Игрок: {name}
+        👮 Персонал: {staff}
 
-        📜 Reason: {reason}
-        🕒 Date: {time}
+        📜 Причина: {reason}
+        🕒 Дата: {time}
         `
       },
       kick: {
         // Placeholders: {name}, {staff}, {reason}, {time}, {server}
         description: `
-        👤 User: {name}
-        👮 Staff: {staff}
+        👤 Игрок: {name}
+        👮 Персонал: {staff}
 
-        📜 Reason: {reason}
-        🕒 Date: {time}
+        📜 Причина: {reason}
+        🕒 Дата: {time}
         `
       }
     }

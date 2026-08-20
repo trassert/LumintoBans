@@ -29,8 +29,8 @@ export default async function Mutes(searchParams: SearchParams) {
   const dictionary = (await language()).dictionary.pages.mutes;
   
   const page = getPage(searchParams);
-  const player = getPlayer(searchParams);
-  const staff = getStaff(searchParams);
+  const player = await getPlayer(searchParams);
+  const staff = await getStaff(searchParams);
   
   const muteCount = await getMuteCount(player, staff);
 

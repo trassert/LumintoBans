@@ -30,8 +30,8 @@ export default async function Warns(searchParams: SearchParams) {
   const dictionary = (await language()).dictionary.pages.warns;
   
   const page = getPage(searchParams);
-  const player = getPlayer(searchParams);
-  const staff = getStaff(searchParams);
+  const player = await getPlayer(searchParams);
+  const staff = await getStaff(searchParams);
   
   const warnCount = await getWarnCount(player, staff);
 

@@ -1,5 +1,6 @@
 import { siteConfig } from "@config/site";
 import { getPlayerName } from "@/lib/punishment/punishment";
+import { isUuid } from "@/utils/searchParams";
 
 import { PlayerFilter } from "./player-filter";
 
@@ -18,7 +19,7 @@ export const Filters = async ({ player, staff }: FiltersProps) => {
   let staffName;
   if (staff) {
     if (staff === siteConfig.console.uuid) staffName = siteConfig.console.name;
-    else staffName = await getPlayerName(staff);
+    else staffName = isUuid(staff) ? await getPlayerName(staff) : staff;
   }
   
   return (

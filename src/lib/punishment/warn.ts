@@ -4,13 +4,13 @@ import { siteConfig } from "@config/site";
 import { PunishmentListItem } from "@/types";
 
 import { db } from "../db";
-import { getPlayerName } from "./punishment";
+import { getPlayerName, getStaffFilter } from "./punishment";
 
 const getWarnCount = async (player?: string, staff?: string) => {
   const count = await db.litebans_warnings.count({
     where: {
       uuid: player,
-      banned_by_uuid: staff
+      ...getStaffFilter(staff)
     }
   });
   return count;
@@ -20,7 +20,7 @@ const getWarns = async (page: number, player?: string, staff?: string) => {
   const warns =  await db.litebans_warnings.findMany({
     where: {
       uuid: player,
-      banned_by_uuid: staff
+      ...getStaffFilter(staff)
     },
     take: 10,
     skip: (page - 1) * 10,

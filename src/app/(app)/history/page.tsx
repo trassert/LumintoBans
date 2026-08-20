@@ -38,8 +38,8 @@ export default async function History(searchParams: SearchParams) {
   
   
   const page = getPage(searchParams);
-  const player = getPlayer(searchParams);
-  const staff = getStaff(searchParams);
+  const player = await getPlayer(searchParams);
+  const staff = await getStaff(searchParams);
 
   const punishmentCount = await getPunishmentCount(player, staff).then(({ bans, mutes, warns, kicks }) => bans + mutes + warns + kicks);
 

@@ -29,8 +29,8 @@ export default async function Bans(searchParams: SearchParams) {
   const dictionary = await (await language()).dictionary.pages.bans;
   
   const page = getPage(searchParams);
-  const player = getPlayer(searchParams);
-  const staff = getStaff(searchParams);
+  const player = await getPlayer(searchParams);
+  const staff = await getStaff(searchParams);
   
   const banCount = await getBanCount(player, staff);
   
