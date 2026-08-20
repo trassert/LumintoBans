@@ -7,8 +7,9 @@ const playerNamePattern = /^[A-Za-z\d_]{1,16}$/;
 
 const isUuid = (value?: string) => !!value && uuidPattern.test(value);
 
-const getPage = ({ searchParams }: SearchParams) => {
-  let page = searchParams.page ? parseInt(searchParams.page as string) : 1;
+const getPage = async ({ searchParams }: SearchParams) => {
+  const params = await searchParams;
+  let page = params.page ? parseInt(params.page as string) : 1;
 
   if (isNaN(page) || !Number.isFinite(page) || page < 1) {
     page = 1;
@@ -18,7 +19,8 @@ const getPage = ({ searchParams }: SearchParams) => {
 }
 
 const getPlayer = async ({ searchParams }: SearchParams) => {
-  const player = typeof searchParams.player === "string" ? searchParams.player : undefined;
+  const params = await searchParams;
+  const player = typeof params.player === "string" ? params.player : undefined;
   if (!player) {
     return undefined;
   }
@@ -36,7 +38,8 @@ const getPlayer = async ({ searchParams }: SearchParams) => {
 }
 
 const getStaff = async ({ searchParams }: SearchParams) => {
-  const staff = typeof searchParams.staff === "string" ? searchParams.staff : undefined;
+  const params = await searchParams;
+  const staff = typeof params.staff === "string" ? params.staff : undefined;
   if (!staff || (!isUuid(staff) && staff !== siteConfig.console.uuid && !playerNamePattern.test(staff))) {
     return undefined;
   }
