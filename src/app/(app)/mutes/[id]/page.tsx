@@ -16,17 +16,18 @@ import { PunishmentInfoCard } from "@/components/info/punishment-info-card";
 import { RelativeTimeTooltip } from "@/components/punishments/relative-time-tooltip";
 import { PunishmentStatusDot } from "@/components/punishments/punishment-status-dot";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   
   const { lang, dictionary } = await language();
+  const { id } = await params;
 
-  if (isNaN(parseInt(params.id))) {
+  if (isNaN(parseInt(id))) {
     return {
       title: dictionary.pages.errors.notFound.title
     }
   }
 
-  const mute = await getMute(parseInt(params.id), dictionary.pages.mutes);
+  const mute = await getMute(parseInt(id), dictionary.pages.mutes);
 
   if (!mute) {
     return notFound();
@@ -34,7 +35,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   
   return {
     title: p(dictionary.pages.mutes.info.title, {
-      id: params.id
+      id
     }),
     openGraph: {
       images: `https://minotar.net/helm/${mute?.name ?? mute?.uuid}`,
@@ -53,17 +54,19 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default async function Mute({
   params
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
 
   const { lang, dictionary } = await language();
   const localDictionary = dictionary.pages.mutes;
 
-  if (isNaN(parseInt(params.id))) {
+  const { id } = await params;
+
+  if (isNaN(parseInt(id))) {
     return notFound();
   }
 
-  const mute = await getMute(parseInt(params.id), localDictionary);
+  const mute = await getMute(parseInt(id), localDictionary);
 
   if (!mute) {
     return notFound();
@@ -74,7 +77,7 @@ export default async function Mute({
       <div className="space-y-2 mx-auto">
         <h1 className="text-center text-5xl font-bold leading-tight tracking-tighter sm:text-6xl lg:leading-[1.1]">
           {p(localDictionary.info.title, {
-            id: params.id
+            id
           })}
         </h1>
         <div className="flex space-x-2 justify-center">

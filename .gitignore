@@ -1,4 +1,4 @@
-```gitignore
+```
 # Dependencies
 node_modules/
 
@@ -11,38 +11,13 @@ out/
 # Environment variables
 .env
 .env.local
-.env.*
-
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-.venv/
-pip-log.txt
-pip-delete-this-directory.txt
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.log
+*.env.*
 
 # Logs
 *.log
 
 # OS generated files
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
 
 # Editor files
@@ -50,15 +25,47 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
-*~
+*.tmp
 
-# Testing
-coverage/
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.coverage
 htmlcov/
+.coverage.*
 .pytest_cache/
 .mypy_cache/
+
+# Node.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Compiled CSS/JS
+*.min.js
+*.min.css
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Temporary folders
+tmp/
+temp/
+
+# System Files
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 ```
-
-Wait, let me reconsider. Looking at the modified files, they are all TypeScript/React source files (.tsx) and utility files in a punishment system. There are no build artifacts, dependency directories, or temporary files in the change list. The changes are purely source code modifications.
-
-(empty)

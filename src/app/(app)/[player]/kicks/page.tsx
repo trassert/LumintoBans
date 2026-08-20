@@ -19,29 +19,30 @@ import { Badge } from "@/components/ui/badge";
 import { Icons } from "@/components/layout/icons";
 import { KicksTable } from "@/components/punishments/kicks/kicks-table";
 
-export async function generateMetadata({ params }: { params: { player: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ player: string }> }) {
   
   const { dictionary } = await language();
+  const { player } = await params;
 
-  const playerName = params.player.replace("%40", '');
-  const player = await getPlayerByName(playerName);
+  const playerName = player.replace("%40", '');
+  const playerData = await getPlayerByName(playerName);
 
-  if (!player || player.uuid === "CONSOLE") {
+  if (!playerData || playerData.uuid === "CONSOLE") {
     return {
       title: dictionary.pages.errors.notFound.title
     }
   }
   
-  const kickCount = await getPlayerKickCount(player.uuid!);
+  const kickCount = await getPlayerKickCount(playerData.uuid!);
   
   return {
     title: p(dictionary.pages.playerHistory.title, {
-      player: params.player.replace("%40", '')
+      player
     }),
     openGraph: {
-      images: `https://minotar.net/helm/${player.name}`,
+      images: `https://minotar.net/helm/${playerData.name}`,
       description: p(siteConfig.openGraph.pages.player.kicks.description, {
-        name: player.name,
+        name: playerData.name,
         total: kickCount
       })
     }
@@ -53,26 +54,27 @@ export default async function Kicks({
   params
 }: {
   searchParams: { [key: string]: string | string[] | undefined },
-  params: { player: string }
+  params: Promise<{ player: string }>
 }) {
   const { dictionary } = await language();
   const localDictionary = dictionary.pages.playerHistory;
   
   const page = getPage({searchParams});
 
-  const playerName = params.player.replace("%40", '');
-  const player = await getPlayerByName(playerName);
+  const { player } = await params;
+  const playerName = player.replace("%40", '');
+  const playerData = await getPlayerByName(playerName);
 
-  if (!player || player.uuid === "CONSOLE") {
+  if (!playerData || playerData.uuid === "CONSOLE") {
     notFound();
   }
 
   const staff = await getStaff({searchParams});
 
-  const banCount = await getPlayerBanCount(player.uuid!);
-  const muteCount = await getPlayerMuteCount(player.uuid!);
-  const warnCount = await getPlayerWarnCount(player.uuid!);
-  const kickCount = await getPlayerKickCount(player.uuid!);
+  const banCount = await getPlayerBanCount(playerData.uuid!);
+  const muteCount = await getPlayerMuteCount(playerData.uuid!);
+  const warnCount = await getPlayerWarnCount(playerData.uuid!);
+  const kickCount = await getPlayerKickCount(playerData.uuid!);
 
   return (
     <div className="flex h-full flex-col items-center gap-4 py-8 md:py-12 md:pb-8 lg:py-18">
@@ -88,7 +90,7 @@ export default async function Kicks({
         <div className="md:w-[350px] md:py-4 space-y-1">
           <h1 className="text-center md:text-left text-4xl font-bold leading-tight tracking-tighter sm:text-5xl lg:leading-[1.1]">
             {p(localDictionary.title, {
-              player: params.player.replace("%40", '')
+              player
             })}
           </h1>
           <div className="flex space-x-2 whitespace-nowrap">

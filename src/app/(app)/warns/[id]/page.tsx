@@ -14,17 +14,18 @@ import { getCachedWarn as getWarn } from "@/lib/punishment/warn";
 import { PunishmentInfoCard } from "@/components/info/punishment-info-card";
 import { RelativeTimeTooltip } from "@/components/punishments/relative-time-tooltip";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   
   const { dictionary } = await language();
+  const { id } = await params;
 
-  if (isNaN(parseInt(params.id))) {
+  if (isNaN(parseInt(id))) {
     return {
       title: dictionary.pages.errors.notFound.title
     }
   }
 
-  const warn = await getWarn(parseInt(params.id));
+  const warn = await getWarn(parseInt(id));
 
   if (!warn) {
     return notFound();
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   
   return {
     title: p(dictionary.pages.warns.info.title, {
-      id: params.id
+      id
     }),
     openGraph: {
       images: `https://minotar.net/helm/${warn?.name ?? warn?.uuid}`,
@@ -50,17 +51,19 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default async function Warn({
   params
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
 
   const { lang, dictionary } = await language();
   const localDictionary = dictionary.pages.warns;
 
-  if (isNaN(parseInt(params.id))) {
+  const { id } = await params;
+
+  if (isNaN(parseInt(id))) {
     return notFound();
   }
 
-  const warn = await getWarn(parseInt(params.id));
+  const warn = await getWarn(parseInt(id));
 
   if (!warn) {
     return notFound();
@@ -71,7 +74,7 @@ export default async function Warn({
       <div className="space-y-2 mx-auto">
         <h1 className="text-center text-5xl font-bold leading-tight tracking-tighter sm:text-6xl lg:leading-[1.1]">
           {p(localDictionary.info.title, {
-            id: params.id
+            id
           })}
         </h1>
       </div>

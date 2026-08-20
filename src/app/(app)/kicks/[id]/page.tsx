@@ -13,17 +13,18 @@ import { getCachedKick as getKick } from "@/lib/punishment/kick";
 import { PunishmentInfoCard } from "@/components/info/punishment-info-card";
 import { RelativeTimeTooltip } from "@/components/punishments/relative-time-tooltip";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   
   const { dictionary } = await language();
+  const { id } = await params;
 
-  if (isNaN(parseInt(params.id))) {
+  if (isNaN(parseInt(id))) {
     return {
       title: dictionary.pages.errors.notFound.title
     }
   }
 
-  const kick = await getKick(parseInt(params.id));
+  const kick = await getKick(parseInt(id));
 
   if (!kick) {
     return notFound();
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   
   return {
     title: p(dictionary.pages.kicks.info.title, {
-      id: params.id
+      id
     }),
     openGraph: {
       images: `https://minotar.net/helm/${kick?.name ?? kick?.uuid}`,
@@ -49,17 +50,19 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default async function Kick({
   params
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
 
   const { lang, dictionary } = await language();
   const localDictionary = dictionary.pages.kicks;
 
-  if (isNaN(parseInt(params.id))) {
+  const { id } = await params;
+
+  if (isNaN(parseInt(id))) {
     return notFound();
   }
 
-  const kick = await getKick(parseInt(params.id));
+  const kick = await getKick(parseInt(id));
 
   if (!kick) {
     return notFound();
@@ -70,7 +73,7 @@ export default async function Kick({
       <div className="space-y-2 mx-auto">
         <h1 className="text-center text-5xl font-bold leading-tight tracking-tighter sm:text-6xl lg:leading-[1.1]">
           {p(localDictionary.info.title, {
-            id: params.id
+            id
           })}
         </h1>
       </div>
