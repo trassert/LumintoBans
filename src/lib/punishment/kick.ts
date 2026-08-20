@@ -17,9 +17,9 @@ const getKickCount = async (player?: string, staff?: string) => {
 }
 
 const getKicks = async (page: number, player?: string, staff?: string) => {
-  const kicks =  await db.litebans_kicks.findMany({
+  const kicks = await db.litebans_kicks.findMany({
     where: {
-      uuid: player,
+      uuid: player ?? undefined,
       ...getStaffFilter(staff)
     },
     take: 10,

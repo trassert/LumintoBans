@@ -18,9 +18,9 @@ const getMuteCount = async (player?: string, staff?: string) => {
 }
 
 const getMutes = async (page: number, player?: string, staff?: string) => {
-  const mutes =  await db.litebans_mutes.findMany({
+  const mutes = await db.litebans_mutes.findMany({
     where: {
-      uuid: player,
+      uuid: player ?? undefined,
       ...getStaffFilter(staff)
     },
     take: 10,

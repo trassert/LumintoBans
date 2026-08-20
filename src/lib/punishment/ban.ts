@@ -18,9 +18,9 @@ const getBanCount = async (player?: string, staff?: string) => {
 }
 
 const getBans = async (page: number, player?: string, staff?: string) => {
-  const bans =  (await db.litebans_bans.findMany({
+  const bans = await db.litebans_bans.findMany({
     where: {
-      uuid: player,
+      uuid: player ?? undefined,
       ...getStaffFilter(staff)
     },
     take: 10,
@@ -38,7 +38,7 @@ const getBans = async (page: number, player?: string, staff?: string) => {
     orderBy: {
       time: "desc"
     }
-  }));
+  });
 
   return bans;
 }
