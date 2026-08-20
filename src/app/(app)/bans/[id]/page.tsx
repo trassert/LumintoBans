@@ -16,16 +16,17 @@ import { PunishmentInfoCard } from "@/components/info/punishment-info-card";
 import { RelativeTimeTooltip } from "@/components/punishments/relative-time-tooltip";
 import { PunishmentStatusDot } from "@/components/punishments/punishment-status-dot";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   
   const { lang, dictionary } = await language();
   const localDictionary = dictionary.pages.bans;
+  const { id } = await params;
 
-  if (isNaN(parseInt(params.id))) {
+  if (isNaN(parseInt(id))) {
     return notFound();
   }
 
-  const ban = await getBan(parseInt(params.id), localDictionary);
+  const ban = await getBan(parseInt(id), localDictionary);
 
   if (!ban) {
     return notFound();
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   
   return {
     title: p(dictionary.pages.bans.info.title, {
-      id: params.id
+      id: id
     }),
     openGraph: {
       images: `https://minotar.net/helm/${ban?.name ?? ban?.uuid}`,
@@ -52,17 +53,18 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default async function Ban({
   params
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
 
   const { lang, dictionary } = await language();
   const localDictionary = dictionary.pages.bans;
+  const { id } = await params;
 
-  if (isNaN(parseInt(params.id))) {
+  if (isNaN(parseInt(id))) {
     return notFound();
   }
 
-  const ban = await getBan(parseInt(params.id), localDictionary);
+  const ban = await getBan(parseInt(id), localDictionary);
 
   if (!ban) {
     return notFound();
@@ -73,7 +75,7 @@ export default async function Ban({
       <div className="space-y-2 mx-auto">
         <h1 className="text-center text-5xl font-bold leading-tight tracking-tighter sm:text-6xl lg:leading-[1.1]">
           {p(localDictionary.info.title, {
-            id: params.id
+            id: id
           })}
         </h1>
         <div className="flex space-x-2 justify-center">
