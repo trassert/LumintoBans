@@ -38,7 +38,7 @@ export default async function Home(searchParams: SearchParams) {
   const warnCount = await db.litebans_warnings.count();
   const kickCount = await db.litebans_kicks.count();
 
-  const page = getPage(searchParams);
+  const page = await getPage(searchParams);
   const player = await getPlayer(searchParams);
   const staff = await getStaff(searchParams);
 
