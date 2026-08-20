@@ -1,7 +1,7 @@
 export const siteConfig = {
   title: "Люминт - Баны",
-  logo: "/logo.webp",
-  favicon: "/logo.webp",
+  logo: "/bans/logo.webp",
+  favicon: "/bans/logo.webp",
   languages: {
     available: [
       "ru",
