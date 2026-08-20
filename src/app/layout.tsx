@@ -11,12 +11,14 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { SiteHeader } from "@/components/layout/header/site-header";
 
 const inter = Inter({ subsets: ["latin"] });
+const siteUrl = process.env.SITE_URL || "http://localhost:3000/bans";
 
 export async function generateMetadata() {
   
   const { dictionary } = await language();
   
   return {
+    metadataBase: new URL(siteUrl),
     title: {
       template: `%s | ${siteConfig.title}`,
       default: siteConfig.title,
