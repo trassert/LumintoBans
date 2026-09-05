@@ -3,9 +3,10 @@
 
   <h1 style="font-size: 38px">Luminto-Litebans</h1>
 
-  Веб-интерфейс для [LiteBans](https://www.spigotmc.org/resources/litebans.3715/), созданный на базе:
+  Веб-интерфейс для [LiteBans](https://www.spigotmc.org/resources/litebans.3715/)
 
   [![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/) [![Prisma](https://img.shields.io/badge/Prisma-black?style=for-the-badge&logo=prisma&logoColor=white)](https://prisma.io/) [![shadcn/ui](https://cdn.yosoyvillaa.dev/uploads/shadcn.svg)](https://ui.shadcn.com/)
+  <img src="https://img.shields.io/badge/Sponsored%20by-Luminto-purple?style=for-the-badge&labelColor=black&logo=githubsponsors&logoColor=white&logoSize=auto" alt="Badge">
 </div>
 
 ## 👾 Демо
