@@ -1,7 +1,7 @@
 import { siteConfig } from "@config/site";
 import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   let lang = request.cookies.get("lang")?.value
 
   if (!lang || !siteConfig.languages.available.includes(lang)) {
