@@ -5,7 +5,7 @@ import { TableCell } from "@/components/ui/table";
 
 export const AvatarSkeletonCell = ({ className }: { className?: string }) => (
   <TableCell className={cn("space-y-1 w-40", className)}>
-    <Skeleton className="mx-auto rounded-sm size-8" />
+    <Skeleton className="mx-auto rounded-xs size-8" />
     <Skeleton className="mx-auto w-16 h-4 mt-1" />
   </TableCell>
 );

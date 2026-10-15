@@ -23,6 +23,6 @@ export const PlayerAvatar = ({
     alt="Аватар"
     width={size ?? 32}
     height={size ?? 32}
-    className={cn("mx-auto rounded-sm", className)}
+    className={cn("mx-auto rounded-xs", className)}
   />
 )

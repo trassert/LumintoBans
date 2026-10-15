@@ -50,7 +50,7 @@ export const PlayerFilter = ({ type, name, uuid, console }: PlayerFilter) => {
     <Button onClick={handleClick} variant="outline" size="sm" className="h-8 border-dashed flex mx-auto lg:mx-0">
       {dictionary.words[type]}
       <Separator orientation="vertical" className="mx-2 h-4" />
-      <Badge variant="secondary" className="rounded-sm px-1 font-normal">
+      <Badge variant="secondary" className="rounded-xs px-1 font-normal">
         {console ? <ConsoleAvatar name={name} size={16} className="mr-1" /> : <PlayerAvatar uuid={uuid} name={name} size={16} className="mr-1" />}
         {name}
       </Badge>

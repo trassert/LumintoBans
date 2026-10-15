@@ -20,7 +20,7 @@ export const PunishmentInfoCard = async ({ type, punishment }: PunishmentInfoCar
   const { lang, dictionary } = await language();
 
   return (
-    <div className="rounded-2xl border bg-card p-6 text-center shadow-sm md:p-8">
+    <div className="rounded-2xl border bg-card p-6 text-center shadow-xs md:p-8">
       <div className="flex flex-col items-center gap-8 md:flex-row md:items-start md:justify-center">
         {/* Punished player */}
         <div className="flex flex-1 flex-col items-center gap-4">
@@ -46,7 +46,7 @@ export const PunishmentInfoCard = async ({ type, punishment }: PunishmentInfoCar
               alt={`${punishment.name}'s avatar`}
               width={24}
               height={24}
-              className="rounded-sm"
+              className="rounded-xs"
             />
             <p className="text-lg font-medium">{punishment.name}</p>
           </div>
@@ -88,7 +88,7 @@ export const PunishmentInfoCard = async ({ type, punishment }: PunishmentInfoCar
                 alt={`${punishment.banned_by_name}'s avatar`}
                 width={24}
                 height={24}
-                className="rounded-sm"
+                className="rounded-xs"
               />
             )}
             <p className="text-lg font-medium">{punishment.banned_by_name}</p>

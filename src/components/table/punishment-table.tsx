@@ -23,7 +23,7 @@ interface PunishmentTableProps {
   page: number;
   player?: string;
   staff?: string;
-  skeletonRow: () => JSX.Element;
+  skeletonRow: () => ReactNode;
   children: ReactNode;
 }
 
@@ -41,7 +41,7 @@ export const PunishmentTable = ({
   return (
     <div className="space-y-2">
       <Filters player={player} staff={staff} />
-      <ScrollArea className="shadow border-y lg:rounded-xl lg:border">
+      <ScrollArea className="shadow-sm border-y lg:rounded-xl lg:border">
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/50">

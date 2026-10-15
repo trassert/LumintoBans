@@ -1,13 +1,14 @@
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
+import { siteConfig } from "@config/site";
 
 import { Icons } from "@/components/layout/icons";
 import { buttonVariants } from "@/components/ui/button";
 
 export const GithubButton = () => (
   <Link
-    href="https://github.com/yosoyvillaa/next-litebans"
+    href={siteConfig.links.github}
     target="_blank"
     rel="noreferrer"
   >

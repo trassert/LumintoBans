@@ -2,6 +2,9 @@ export const siteConfig = {
   title: "Люминт - Баны",
   logo: "/bans/logo.webp",
   favicon: "/bans/logo.webp",
+  links: {
+    github: "https://github.com/trassert/LumintoBans",
+  },
   languages: {
     available: [
       "ru",

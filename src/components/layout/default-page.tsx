@@ -21,7 +21,7 @@ export const DefaultPage = ({
     <div className={cn("relative flex h-full flex-col items-center gap-4 py-8 md:py-12 md:pb-8 lg:py-18", padding)}>
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-muted/50 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-linear-to-b from-muted/50 to-transparent"
       />
 
       <h1 className="text-gradient text-center text-5xl font-bold leading-tight tracking-tighter sm:text-6xl lg:leading-[1.1]">

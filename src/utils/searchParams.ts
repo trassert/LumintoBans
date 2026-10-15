@@ -1,4 +1,4 @@
-import { SearchParams } from "@/types";
+import { SearchParamsValues } from "@/types";
 import { siteConfig } from "@config/site";
 import { db } from "@/lib/db";
 
@@ -7,7 +7,7 @@ const playerNamePattern = /^[A-Za-z\d_]{1,16}$/;
 
 const isUuid = (value?: string) => !!value && uuidPattern.test(value);
 
-const getPage = ({ searchParams }: SearchParams) => {
+const getPage = (searchParams: SearchParamsValues) => {
   let page = searchParams.page ? parseInt(searchParams.page as string) : 1;
 
   if (isNaN(page) || !Number.isFinite(page) || page < 1) {
@@ -17,7 +17,7 @@ const getPage = ({ searchParams }: SearchParams) => {
   return Math.floor(page);
 }
 
-const getPlayer = async ({ searchParams }: SearchParams) => {
+const getPlayer = async (searchParams: SearchParamsValues) => {
   const player = typeof searchParams.player === "string" ? searchParams.player : undefined;
   if (!player) {
     return undefined;
@@ -35,7 +35,7 @@ const getPlayer = async ({ searchParams }: SearchParams) => {
   return playerRecord?.uuid ?? undefined;
 }
 
-const getStaff = async ({ searchParams }: SearchParams) => {
+const getStaff = async (searchParams: SearchParamsValues) => {
   const staff = typeof searchParams.staff === "string" ? searchParams.staff : undefined;
   if (!staff || (!isUuid(staff) && staff !== siteConfig.console.uuid && !playerNamePattern.test(staff))) {
     return undefined;

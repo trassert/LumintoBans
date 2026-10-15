@@ -9,15 +9,16 @@ import { getCachedKick as getKick } from "@/lib/punishment/kick";
 
 import { PunishmentInfoCard } from "@/components/info/punishment-info-card";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
 
+  const { id } = await params;
   const { dictionary } = await language();
 
-  if (isNaN(parseInt(params.id))) {
+  if (isNaN(parseInt(id))) {
     return notFound();
   }
 
-  const kick = await getKick(parseInt(params.id));
+  const kick = await getKick(parseInt(id));
 
   if (!kick) {
     return notFound();
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 
   return {
     title: p(dictionary.pages.kicks.info.title, {
-      id: params.id
+      id
     }),
     openGraph: {
       images: getSkinFaceUrl(kick.name, kick.uuid),
@@ -43,17 +44,19 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default async function Kick({
   params
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
+
+  const { id } = await params;
 
   const { dictionary } = await language();
   const localDictionary = dictionary.pages.kicks;
 
-  if (isNaN(parseInt(params.id))) {
+  if (isNaN(parseInt(id))) {
     notFound();
   }
 
-  const kick = await getKick(parseInt(params.id));
+  const kick = await getKick(parseInt(id));
 
   if (!kick) {
     notFound();
@@ -64,7 +67,7 @@ export default async function Kick({
       <div className="space-y-2">
         <h1 className="text-gradient text-center text-4xl font-bold leading-tight tracking-tighter sm:text-5xl lg:leading-[1.1]">
           {p(localDictionary.info.title, {
-            id: params.id
+            id
           })}
         </h1>
       </div>

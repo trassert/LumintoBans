@@ -26,6 +26,14 @@ const Lang = (props: LanguageProviderProps) => {
 
   const router = useRouter();
 
+  const setLocalLang = React.useCallback((newLang: string) => {
+    try {
+      localStorage.setItem("lang", newLang)
+    } catch (e) {
+      // Unsupported
+    }
+  }, [])
+
   React.useEffect(() => {
     try {
       const localLang = localStorage.getItem("lang")
@@ -36,16 +44,7 @@ const Lang = (props: LanguageProviderProps) => {
 
       if (localLang && localLang != props.lang) {
         setLocalLang(props.lang)
-        setLangState(props.lang)
       }
-    } catch (e) {
-      // Unsupported
-    }
-  }, [])
-
-  const setLocalLang = React.useCallback((newLang: string) => {
-    try {
-      localStorage.setItem("lang", newLang)
     } catch (e) {
       // Unsupported
     }

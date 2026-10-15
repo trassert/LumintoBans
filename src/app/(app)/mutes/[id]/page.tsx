@@ -10,15 +10,16 @@ import { getCachedMute as getMute } from "@/lib/punishment/mute";
 import { Badge } from "@/components/ui/badge";
 import { PunishmentInfoCard } from "@/components/info/punishment-info-card";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
 
+  const { id } = await params;
   const { lang, dictionary } = await language();
 
-  if (isNaN(parseInt(params.id))) {
+  if (isNaN(parseInt(id))) {
     return notFound();
   }
 
-  const mute = await getMute(parseInt(params.id), dictionary.pages.mutes);
+  const mute = await getMute(parseInt(id), dictionary.pages.mutes);
 
   if (!mute) {
     return notFound();
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 
   return {
     title: p(dictionary.pages.mutes.info.title, {
-      id: params.id
+      id
     }),
     openGraph: {
       images: getSkinFaceUrl(mute.name, mute.uuid),
@@ -45,17 +46,19 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default async function Mute({
   params
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
+
+  const { id } = await params;
 
   const { dictionary } = await language();
   const localDictionary = dictionary.pages.mutes;
 
-  if (isNaN(parseInt(params.id))) {
+  if (isNaN(parseInt(id))) {
     notFound();
   }
 
-  const mute = await getMute(parseInt(params.id), localDictionary);
+  const mute = await getMute(parseInt(id), localDictionary);
 
   if (!mute) {
     notFound();
@@ -66,7 +69,7 @@ export default async function Mute({
       <div className="space-y-2">
         <h1 className="text-gradient text-center text-4xl font-bold leading-tight tracking-tighter sm:text-5xl lg:leading-[1.1]">
           {p(localDictionary.info.title, {
-            id: params.id
+            id
           })}
         </h1>
         <div className="flex flex-wrap justify-center gap-2">

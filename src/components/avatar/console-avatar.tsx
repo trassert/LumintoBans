@@ -19,6 +19,6 @@ export const ConsoleAvatar = ({
     alt={`${name}'s avatar`}
     width={size ?? 32}
     height={size ?? 32}
-    className={cn("mx-auto rounded-sm", className)}
+    className={cn("mx-auto rounded-xs", className)}
   />
 )

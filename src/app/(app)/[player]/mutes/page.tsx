@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import { SearchParamsValues } from "@/types";
 import { siteConfig } from "@config/site";
 import p from "@/lib/language/utils/parse";
 import { getSkinFaceUrl } from "@/utils/skin";
@@ -13,11 +14,12 @@ import {
 import { MutesTable } from "@/components/punishments/mutes/mutes-table";
 import { PlayerHeader } from "@/components/layout/player-header";
 
-export async function generateMetadata({ params }: { params: { player: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ player: string }> }) {
 
   const { dictionary } = await language();
 
-  const playerName = params.player.replace("%40", '');
+  const routeParams = await params;
+  const playerName = routeParams.player.replace("%40", '');
   const player = await getPlayerByName(playerName);
 
   if (!player || player.uuid === siteConfig.console.uuid) {
@@ -46,21 +48,24 @@ export default async function Mutes({
   searchParams,
   params
 }: {
-  searchParams: { [key: string]: string | string[] | undefined },
-  params: { player: string }
+  searchParams: Promise<SearchParamsValues>,
+  params: Promise<{ player: string }>
 }) {
   const { dictionary } = await language();
 
-  const page = getPage({searchParams});
+  const search = await searchParams;
+  const routeParams = await params;
 
-  const playerName = params.player.replace("%40", '');
+  const page = getPage(search);
+
+  const playerName = routeParams.player.replace("%40", '');
   const player = await getPlayerByName(playerName);
 
   if (!player || player.uuid === siteConfig.console.uuid) {
     notFound();
   }
 
-  const staff = await getStaff({searchParams});
+  const staff = await getStaff(search);
 
   return (
     <div className="flex h-full flex-col items-center gap-4 py-8 md:py-12 md:pb-8 lg:py-18">

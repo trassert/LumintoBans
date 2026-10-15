@@ -25,12 +25,13 @@ export async function generateMetadata() {
   }
 }
 
-export default async function Bans(searchParams: SearchParams) {
+export default async function Bans({ searchParams }: SearchParams) {
   const dictionary = await (await language()).dictionary.pages.bans;
   
-  const page = getPage(searchParams);
-  const player = await getPlayer(searchParams);
-  const staff = await getStaff(searchParams);
+  const params = await searchParams;
+  const page = getPage(params);
+  const player = await getPlayer(params);
+  const staff = await getStaff(params);
   
   const banCount = await getBanCount(player, staff);
   

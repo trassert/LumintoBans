@@ -1,5 +1,8 @@
+export type SearchParamsValues = { [key: string]: string | string[] | undefined }
+
+// Next 15+ passes search params as a Promise that needs to be awaited.
 export type SearchParams = {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<SearchParamsValues>
 }
 
 const PUNISMENT_TYPES = {

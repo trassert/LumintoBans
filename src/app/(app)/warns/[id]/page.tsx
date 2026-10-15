@@ -9,15 +9,16 @@ import { getCachedWarn as getWarn } from "@/lib/punishment/warn";
 
 import { PunishmentInfoCard } from "@/components/info/punishment-info-card";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
 
+  const { id } = await params;
   const { dictionary } = await language();
 
-  if (isNaN(parseInt(params.id))) {
+  if (isNaN(parseInt(id))) {
     return notFound();
   }
 
-  const warn = await getWarn(parseInt(params.id));
+  const warn = await getWarn(parseInt(id));
 
   if (!warn) {
     return notFound();
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 
   return {
     title: p(dictionary.pages.warns.info.title, {
-      id: params.id
+      id
     }),
     openGraph: {
       images: getSkinFaceUrl(warn.name, warn.uuid),
@@ -43,17 +44,19 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default async function Warn({
   params
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
+
+  const { id } = await params;
 
   const { dictionary } = await language();
   const localDictionary = dictionary.pages.warns;
 
-  if (isNaN(parseInt(params.id))) {
+  if (isNaN(parseInt(id))) {
     notFound();
   }
 
-  const warn = await getWarn(parseInt(params.id));
+  const warn = await getWarn(parseInt(id));
 
   if (!warn) {
     notFound();
@@ -64,7 +67,7 @@ export default async function Warn({
       <div className="space-y-2">
         <h1 className="text-gradient text-center text-4xl font-bold leading-tight tracking-tighter sm:text-5xl lg:leading-[1.1]">
           {p(localDictionary.info.title, {
-            id: params.id
+            id
           })}
         </h1>
       </div>
