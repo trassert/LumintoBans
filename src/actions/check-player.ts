@@ -1,6 +1,7 @@
 "use server"
 
 import { db } from "@/lib/db";
+import { siteConfig } from "@config/site";
 
 export const checkPlayer = async (name: string) => {
   const player = await db.litebans_history.findFirst({
@@ -16,7 +17,7 @@ export const checkPlayer = async (name: string) => {
     }
   });
 
-  if (player && player.uuid === "CONSOLE") return { exists: false }
+  if (player && player.uuid === siteConfig.console.uuid) return { exists: false }
 
   return { 
     exists: player ? true : false,

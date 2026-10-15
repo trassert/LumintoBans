@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: { player: string } 
   const playerName = params.player.replace("%40", '');
   const player = await getPlayerByName(playerName);
 
-  if (!player || player.uuid === "CONSOLE") {
+  if (!player || player.uuid === siteConfig.console.uuid) {
     return {
       title: dictionary.pages.errors.notFound.title
     }
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: { params: { player: string } 
       player: playerName
     }),
     openGraph: {
-      images: getSkinFaceUrl(player.name, player.uuid, 40),
+      images: getSkinFaceUrl(player.name, player.uuid),
       description: p(siteConfig.openGraph.pages.player.bans.description, {
         name: player.name,
         total: banCount
@@ -56,7 +56,7 @@ export default async function Bans({
   const playerName = params.player.replace("%40", '');
   const player = await getPlayerByName(playerName);
 
-  if (!player || player.uuid === "CONSOLE") {
+  if (!player || player.uuid === siteConfig.console.uuid) {
     notFound();
   }
 

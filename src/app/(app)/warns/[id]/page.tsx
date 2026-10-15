@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       id: params.id
     }),
     openGraph: {
-      images: getSkinFaceUrl(warn.name, warn.uuid, 40),
+      images: getSkinFaceUrl(warn.name, warn.uuid),
       description: p(siteConfig.openGraph.punishments.warn.description, {
         name: warn.name,
         staff: warn.banned_by_name,

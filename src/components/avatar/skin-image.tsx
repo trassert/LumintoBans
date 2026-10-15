@@ -4,18 +4,21 @@ import { useEffect, useState } from "react";
 
 interface SkinImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src" | "onError"> {
   src: string;
-  fallbackSrc?: string;
+  fallbackSrc?: string | string[];
   alt?: string;
 }
 
-// Renders a skin image and swaps it for the default skin when the skin service
-// fails (unknown player, network error, service outage), so the preview never
-// degrades to text-only.
+// Renders a skin and walks through the fallbacks (e.g. the renderer's default
+// 3D skin, then a bundled placeholder) whenever a source fails to load, so a
+// preview never degrades to a broken image or a mismatched flat placeholder.
 export const SkinImage = ({ src, fallbackSrc, alt = "", ...props }: SkinImageProps) => {
-  const [currentSrc, setCurrentSrc] = useState(src);
+  const fallbacks = fallbackSrc ? (Array.isArray(fallbackSrc) ? fallbackSrc : [fallbackSrc]) : [];
+  const sources = [src, ...fallbacks];
+  const [step, setStep] = useState(0);
+  const currentSrc = sources[Math.min(step, sources.length - 1)];
 
   useEffect(() => {
-    setCurrentSrc(src);
+    setStep(0);
   }, [src]);
 
   return (
@@ -24,9 +27,7 @@ export const SkinImage = ({ src, fallbackSrc, alt = "", ...props }: SkinImagePro
       {...props}
       src={currentSrc}
       alt={alt}
-      onError={() => {
-        if (fallbackSrc && currentSrc !== fallbackSrc) setCurrentSrc(fallbackSrc);
-      }}
+      onError={() => setStep((current) => Math.min(current + 1, sources.length - 1))}
     />
   );
 }

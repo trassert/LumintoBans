@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@config/site";
-import { getSkinFaceUrl } from "@/utils/skin";
+import { getSkinFaceUrl, getDefaultSkinUrl } from "@/utils/skin";
 
 import { SkinImage } from "@/components/avatar/skin-image";
 
@@ -18,8 +18,8 @@ export const PlayerAvatar = ({
   className
 }: PlayerAvatarProps) => (
   <SkinImage
-    src={getSkinFaceUrl(name, uuid, 8)}
-    fallbackSrc={siteConfig.defaultSkin.head}
+    src={getSkinFaceUrl(name, uuid)}
+    fallbackSrc={[getDefaultSkinUrl("face"), siteConfig.defaultSkin.head]}
     alt="Аватар"
     width={size ?? 32}
     height={size ?? 32}

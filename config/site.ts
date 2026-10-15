@@ -10,7 +10,7 @@ export const siteConfig = {
   },
   console: {
     name: "Консоль", // Just for filter badge
-    uuid: "[Console]", // Use for filter url and to check if a punishment is made from the Console. In some versions of Litebans, the console uuid is "CONSOLE".
+    uuid: "CONSOLE", // Used for filter url and to check if a punishment was made from the Console.
     icon: "/bans/console.webp",
     body: "/bans/console-body.webp",
     bust: "/bans/console-bust.webp",

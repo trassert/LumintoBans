@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@config/site";
-import { getSkinBodyUrl } from "@/utils/skin";
+import { getSkinBodyUrl, getDefaultSkinUrl } from "@/utils/skin";
 
 import { SkinImage } from "@/components/avatar/skin-image";
 
@@ -14,9 +14,9 @@ interface AvatarBodyProps {
 export const AvatarBody = ({ name, uuid, console, className }: AvatarBodyProps) => (
   <SkinImage
     src={console ? siteConfig.console.body : getSkinBodyUrl(name, uuid)}
-    fallbackSrc={console ? undefined : siteConfig.defaultSkin.body}
+    fallbackSrc={console ? undefined : [getDefaultSkinUrl("fullbody"), siteConfig.defaultSkin.body]}
     alt={name ?? ""}
-    width={140}
+    width={184}
     height={312}
     className={cn("hidden md:block mx-auto object-contain transition ease-in-out", className)}
   />

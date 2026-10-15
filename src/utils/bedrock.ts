@@ -1,22 +1,20 @@
 import { siteConfig } from "@config/site"
 
-const STEVE_UUID = "2bc90ee6-7b81-3a66-a268-f89d4472e8ec";
+// NMSR (see utils/skin) accepts a username, UUID or texture hash. Usernames are
+// preferred because offline-mode servers store UUIDs that Mojang cannot resolve,
+// while a username still maps to the real (premium) account when one exists.
+const DEFAULT_SKIN_ID = "MHF_Steve";
 
 const isBedrockPlayer = (playername: string | null | undefined): boolean =>
   siteConfig.bedrock.enabled &&
   !!playername &&
   playername.startsWith(siteConfig.bedrock.prefix);
 
-// Skin services only resolve Mojang (online-mode) UUIDs, so Bedrock players and
-// players without a UUID fall back to Steve's UUID.
-const getSkinUUID = (playername: string | null | undefined, uuid: string | null | undefined): string =>
-  isBedrockPlayer(playername) ? STEVE_UUID : uuid ?? STEVE_UUID;
-
-// Identifier used by the 3D skin renderer. Dashes are stripped to skip the
-// renderer's redirect and the extra cache entry it creates.
+// Bedrock players resolve to the default skin; everyone else uses their
+// username first and their UUID second.
 const getSkinId = (playername: string | null | undefined, uuid: string | null | undefined): string =>
-  getSkinUUID(playername, uuid).replace(/-/g, "");
+  isBedrockPlayer(playername) ? DEFAULT_SKIN_ID : playername || uuid || DEFAULT_SKIN_ID;
 
 const bedrockPrefixRegex = new RegExp(`^${siteConfig.bedrock.prefix}`);
 
-export { getSkinUUID, getSkinId, isBedrockPlayer, bedrockPrefixRegex }
+export { getSkinId, isBedrockPlayer, bedrockPrefixRegex, DEFAULT_SKIN_ID }

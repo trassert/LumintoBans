@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { siteConfig } from "@config/site";
-import { getSkinFaceUrl } from "@/utils/skin";
+import { getSkinFaceUrl, getDefaultSkinUrl } from "@/utils/skin";
 import { PunishmentInfo, PunishmentType } from "@/types";
 import { language } from "@/lib/language/dictionaries";
 
@@ -41,8 +41,8 @@ export const PunishmentInfoCard = async ({ type, punishment }: PunishmentInfoCar
           </Link>
           <div className="flex items-center gap-2 rounded-full border bg-muted/50 px-3 py-1">
             <SkinImage
-              src={getSkinFaceUrl(punishment.name, punishment.uuid, 8)}
-              fallbackSrc={siteConfig.defaultSkin.head}
+              src={getSkinFaceUrl(punishment.name, punishment.uuid)}
+              fallbackSrc={[getDefaultSkinUrl("face"), siteConfig.defaultSkin.head]}
               alt={`${punishment.name}'s avatar`}
               width={24}
               height={24}
@@ -83,8 +83,8 @@ export const PunishmentInfoCard = async ({ type, punishment }: PunishmentInfoCar
               <ConsoleAvatar name={punishment.banned_by_name!} size={24} className="!mx-0" />
             ) : (
               <SkinImage
-                src={getSkinFaceUrl(punishment.banned_by_name, punishment.banned_by_uuid, 8)}
-                fallbackSrc={siteConfig.defaultSkin.head}
+                src={getSkinFaceUrl(punishment.banned_by_name, punishment.banned_by_uuid)}
+                fallbackSrc={[getDefaultSkinUrl("face"), siteConfig.defaultSkin.head]}
                 alt={`${punishment.banned_by_name}'s avatar`}
                 width={24}
                 height={24}
