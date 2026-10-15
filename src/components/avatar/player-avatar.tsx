@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@config/site";
-import { getSkinId } from "@/utils/bedrock";
+import { getSkinFaceUrl } from "@/utils/skin";
 
 import { SkinImage } from "@/components/avatar/skin-image";
 
@@ -18,7 +18,7 @@ export const PlayerAvatar = ({
   className
 }: PlayerAvatarProps) => (
   <SkinImage
-    src={`https://minotar.net/helm/${encodeURIComponent(getSkinId(name, uuid))}/128`}
+    src={getSkinFaceUrl(name, uuid, 8)}
     fallbackSrc={siteConfig.defaultSkin.head}
     alt="Аватар"
     width={size ?? 32}

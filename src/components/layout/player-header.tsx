@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { siteConfig } from "@config/site";
 import p from "@/lib/language/utils/parse";
 import q from "@/lib/language/utils/quantity";
-import { getSkinId } from "@/utils/bedrock";
+import { getSkinBodyUrl } from "@/utils/skin";
 import { PunishmentType } from "@/types";
 import { Dictionary } from "@/lib/language/types";
 import {
@@ -52,12 +52,12 @@ export const PlayerHeader = async ({
   return (
     <div className="space-y-2 md:flex md:space-x-4">
       <SkinImage
-        src={`https://minotar.net/bust/${encodeURIComponent(getSkinId(player.name, player.uuid))}/512`}
+        src={getSkinBodyUrl(player.name, player.uuid)}
         fallbackSrc={siteConfig.defaultSkin.bust}
         alt={playerName}
-        width={192}
-        height={192}
-        className="mx-auto"
+        width={140}
+        height={312}
+        className="mx-auto h-[192px] w-[192px] object-contain"
       />
       <div className="md:w-[350px] md:py-4 space-y-1">
         <h1 className="text-gradient text-center md:text-left text-4xl font-bold leading-tight tracking-tighter sm:text-5xl lg:leading-[1.1]">

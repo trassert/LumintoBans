@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { siteConfig } from "@config/site";
-import { getSkinId } from "@/utils/bedrock";
+import { getSkinFaceUrl } from "@/utils/skin";
 import { PunishmentInfo, PunishmentType } from "@/types";
 import { language } from "@/lib/language/dictionaries";
 
@@ -41,7 +41,7 @@ export const PunishmentInfoCard = async ({ type, punishment }: PunishmentInfoCar
           </Link>
           <div className="flex items-center gap-2 rounded-full border bg-muted/50 px-3 py-1">
             <SkinImage
-              src={`https://minotar.net/helm/${encodeURIComponent(getSkinId(punishment.name, punishment.uuid))}/128`}
+              src={getSkinFaceUrl(punishment.name, punishment.uuid, 8)}
               fallbackSrc={siteConfig.defaultSkin.head}
               alt={`${punishment.name}'s avatar`}
               width={24}
@@ -83,7 +83,7 @@ export const PunishmentInfoCard = async ({ type, punishment }: PunishmentInfoCar
               <ConsoleAvatar name={punishment.banned_by_name!} size={24} className="!mx-0" />
             ) : (
               <SkinImage
-                src={`https://minotar.net/helm/${encodeURIComponent(getSkinId(punishment.banned_by_name, punishment.banned_by_uuid))}/128`}
+                src={getSkinFaceUrl(punishment.banned_by_name, punishment.banned_by_uuid, 8)}
                 fallbackSrc={siteConfig.defaultSkin.head}
                 alt={`${punishment.banned_by_name}'s avatar`}
                 width={24}

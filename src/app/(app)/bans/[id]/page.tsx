@@ -4,6 +4,7 @@ import { siteConfig } from "@config/site";
 import p from "@/lib/language/utils/parse";
 import { language } from "@/lib/language/dictionaries";
 import { formatDate, formatDuration } from "@/lib/date";
+import { getSkinFaceUrl } from "@/utils/skin";
 import { getCachedBan as getBan } from "@/lib/punishment/ban";
 
 import { Badge } from "@/components/ui/badge";
@@ -29,7 +30,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       id: params.id
     }),
     openGraph: {
-      images: `https://minotar.net/helm/${ban?.name ?? ban?.uuid}`,
+      images: getSkinFaceUrl(ban.name, ban.uuid, 40),
       description: p(siteConfig.openGraph.punishments.ban.description, {
         name: ban.name,
         staff: ban.banned_by_name,

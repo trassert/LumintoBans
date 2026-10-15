@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { formatDate } from "@/lib/date";
 import { siteConfig } from "@config/site";
+import { getSkinFaceUrl } from "@/utils/skin";
 import p from "@/lib/language/utils/parse";
 import { language } from "@/lib/language/dictionaries";
 import { getCachedWarn as getWarn } from "@/lib/punishment/warn";
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       id: params.id
     }),
     openGraph: {
-      images: `https://minotar.net/helm/${warn?.name ?? warn?.uuid}`,
+      images: getSkinFaceUrl(warn.name, warn.uuid, 40),
       description: p(siteConfig.openGraph.punishments.warn.description, {
         name: warn.name,
         staff: warn.banned_by_name,

@@ -7,21 +7,15 @@ const isBedrockPlayer = (playername: string | null | undefined): boolean =>
   !!playername &&
   playername.startsWith(siteConfig.bedrock.prefix);
 
-// Skin services don't recognise Bedrock UUIDs, so those players get Steve's UUID.
-const getSkinUUID = (playername: string, uuid: string) => {
-  if (!isBedrockPlayer(playername)) return uuid;
+// Skin services only resolve Mojang (online-mode) UUIDs, so Bedrock players and
+// players without a UUID fall back to Steve's UUID.
+const getSkinUUID = (playername: string | null | undefined, uuid: string | null | undefined): string =>
+  isBedrockPlayer(playername) ? STEVE_UUID : uuid ?? STEVE_UUID;
 
-  return STEVE_UUID;
-}
-
-// Identifier used in skin service URLs. Names are preferred because they also
-// work on offline-mode servers, Bedrock players resolve to Steve's UUID and
-// dashes are stripped because the service redirects (and caches) dashless ids.
-const getSkinId = (playername: string | null | undefined, uuid: string | null | undefined): string => {
-  if (isBedrockPlayer(playername) && uuid) return getSkinUUID(playername!, uuid);
-
-  return playername || (uuid ? uuid.replace(/-/g, "") : "");
-}
+// Identifier used by the 3D skin renderer. Dashes are stripped to skip the
+// renderer's redirect and the extra cache entry it creates.
+const getSkinId = (playername: string | null | undefined, uuid: string | null | undefined): string =>
+  getSkinUUID(playername, uuid).replace(/-/g, "");
 
 const bedrockPrefixRegex = new RegExp(`^${siteConfig.bedrock.prefix}`);
 

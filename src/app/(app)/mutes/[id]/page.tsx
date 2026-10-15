@@ -4,6 +4,7 @@ import { siteConfig } from "@config/site";
 import p from "@/lib/language/utils/parse";
 import { language } from "@/lib/language/dictionaries";
 import { formatDate, formatDuration } from "@/lib/date";
+import { getSkinFaceUrl } from "@/utils/skin";
 import { getCachedMute as getMute } from "@/lib/punishment/mute";
 
 import { Badge } from "@/components/ui/badge";
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       id: params.id
     }),
     openGraph: {
-      images: `https://minotar.net/helm/${mute?.name ?? mute?.uuid}`,
+      images: getSkinFaceUrl(mute.name, mute.uuid, 40),
       description: p(siteConfig.openGraph.punishments.mute.description, {
         name: mute.name,
         staff: mute.banned_by_name,

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import { siteConfig } from "@config/site";
 import p from "@/lib/language/utils/parse";
-import { getSkinId } from "@/utils/bedrock";
+import { getSkinFaceUrl } from "@/utils/skin";
 import { language } from "@/lib/language/dictionaries";
 import { getPage, getStaff } from "@/utils/searchParams";
 import {
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: { params: { player: string } 
       player: playerName
     }),
     openGraph: {
-      images: `https://minotar.net/helm/${encodeURIComponent(getSkinId(player.name, player.uuid))}`,
+      images: getSkinFaceUrl(player.name, player.uuid, 40),
       description: p(siteConfig.openGraph.pages.player.bans.description, {
         name: player.name,
         total: banCount

@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@config/site";
-import { getSkinId } from "@/utils/bedrock";
+import { getSkinBodyUrl } from "@/utils/skin";
 
 import { SkinImage } from "@/components/avatar/skin-image";
 
@@ -13,11 +13,11 @@ interface AvatarBustProps {
 
 export const AvatarBust = ({ name, uuid, console, className }: AvatarBustProps) => (
   <SkinImage
-    src={console ? siteConfig.console.bust : `https://minotar.net/bust/${encodeURIComponent(getSkinId(name, uuid))}/512`}
+    src={console ? siteConfig.console.bust : getSkinBodyUrl(name, uuid)}
     fallbackSrc={console ? undefined : siteConfig.defaultSkin.bust}
     alt={name ?? ""}
-    width={192}
-    height={192}
-    className={cn("md:hidden mx-auto transition ease-in-out", className)}
+    width={140}
+    height={312}
+    className={cn("md:hidden mx-auto object-contain transition ease-in-out", className)}
   />
 )
