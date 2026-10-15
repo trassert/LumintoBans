@@ -1,92 +1,105 @@
-/* eslint-disable @next/next/no-img-element */
-"use server"
-
 import Link from "next/link";
 
-import { getSkinUUID } from "@/utils/bedrock";
+import { siteConfig } from "@config/site";
+import { getSkinId } from "@/utils/bedrock";
+import { PunishmentInfo, PunishmentType } from "@/types";
 import { language } from "@/lib/language/dictionaries";
 
 import { AvatarBody } from "@/components/avatar/avatar-body";
 import { AvatarBust } from "@/components/avatar/avatar-bust";
+import { SkinImage } from "@/components/avatar/skin-image";
 import { ConsoleAvatar } from "@/components/avatar/console-avatar";
+import { PunishmentDetails } from "@/components/info/punishment-details";
 
 interface PunishmentInfoCardProps {
-  punishment: {
-    uuid: string | null;
-    name: string | null | undefined;
-    banned_by_uuid: string | null;
-    banned_by_name: string | null;
-    console: boolean;
-  };
-  children: React.ReactNode;
+  type: PunishmentType;
+  punishment: PunishmentInfo;
 }
 
-export const PunishmentInfoCard = async ({ punishment, children }: PunishmentInfoCardProps) => {
-  const { dictionary } = await language();
-  
+export const PunishmentInfoCard = async ({ type, punishment }: PunishmentInfoCardProps) => {
+  const { lang, dictionary } = await language();
+
   return (
-    <div className="flex space-x-4 md:space-y-0 md:flex-row">
-      <div className="order-1 space-y-8">
-        <h2 className="text-3xl font-bold text-center">{dictionary.words.player}</h2>
-        <Link href={`/@${punishment.name}`} className="block">
-          <AvatarBody 
-            uuid={punishment.uuid!} 
-            name={punishment.name!} 
-            className="hover:scale-110 md:h-[312px]"
-          />
-          <AvatarBust 
-            uuid={punishment.uuid!} 
-            name={punishment.name!} 
-            className="hover:scale-110"
-          />
-        </Link>
-        <div className="flex space-x-2 justify-center">
-          <img 
-            src={`https://visage.surgeplay.com/face/128/${punishment.name}`}
-            alt={`${punishment.name}'s avatar`}
-            width={28}
-            height={28}
-            className="rounded-sm mx-0 mr-1"
-          />
-          <p className="text-xl">{punishment.name}</p>
-        </div>
-      </div>
-
-      <div className="hidden md:block order-3 px-8 md:order-2 md:content-center space-y-4 w-[350px]">
-        {children}
-      </div>
-
-      <div className="order-2 md:order-3 space-y-8">
-        <h2 className="text-3xl font-bold text-center">{dictionary.words.staff}</h2>
-        <Link href={`/history?staff=${punishment.banned_by_uuid}`} className="block">
-          <AvatarBody 
-            uuid={punishment.banned_by_uuid!} 
-            name={punishment.banned_by_name!} 
-            console={punishment.console} 
-            className="scale-x-[-1] hover:scale-x-[-1.1] hover:scale-y-110 md:h-[312px]"
-          />
-          <AvatarBust 
-            uuid={punishment.banned_by_uuid!} 
-            name={punishment.banned_by_name!} 
-            console={punishment.console} 
-            className="scale-x-[-1] hover:scale-x-[-1.1] hover:scale-y-110"
-          />
-        </Link>
-        <div className="flex space-x-2 justify-center">
-          {punishment.console ? 
-            <ConsoleAvatar name={punishment.banned_by_name!} size={28} className="!mx-0 mr-1" />
-            :
-            <img 
-              src={`https://visage.surgeplay.com/face/128/${punishment.banned_by_uuid}`}
-              alt={`${punishment.banned_by_name}'s avatar`}
-              width={28}
-              height={28}
-              className="rounded-sm mx-0 mr-1"
+    <div className="rounded-2xl border bg-card p-6 text-center shadow-sm md:p-8">
+      <div className="flex flex-col items-center gap-8 md:flex-row md:items-start md:justify-center">
+        {/* Punished player */}
+        <div className="flex flex-1 flex-col items-center gap-4">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            {dictionary.words.player}
+          </h2>
+          <Link href={`/@${punishment.name}`} className="group block">
+            <AvatarBody
+              name={punishment.name}
+              uuid={punishment.uuid}
+              className="drop-shadow-xl group-hover:scale-105 md:h-[312px]"
             />
-          }
-          <p className="text-xl">{punishment.banned_by_name}</p>
+            <AvatarBust
+              name={punishment.name}
+              uuid={punishment.uuid}
+              className="drop-shadow-xl group-hover:scale-105"
+            />
+          </Link>
+          <div className="flex items-center gap-2 rounded-full border bg-muted/50 px-3 py-1">
+            <SkinImage
+              src={`https://minotar.net/helm/${encodeURIComponent(getSkinId(punishment.name, punishment.uuid))}/128`}
+              fallbackSrc={siteConfig.defaultSkin.head}
+              alt={`${punishment.name}'s avatar`}
+              width={24}
+              height={24}
+              className="rounded-sm"
+            />
+            <p className="text-lg font-medium">{punishment.name}</p>
+          </div>
         </div>
+
+        {/* Punishment details (desktop) */}
+        <div className="hidden w-[350px] shrink-0 md:block">
+          <PunishmentDetails type={type} dictionary={dictionary} lang={lang} punishment={punishment} />
+        </div>
+
+        {/* Staff */}
+        <div className="flex flex-1 flex-col items-center gap-4">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            {dictionary.words.staff}
+          </h2>
+          <Link href={`/history?staff=${punishment.banned_by_uuid}`} className="group block">
+            <div className="scale-x-[-1]">
+              <AvatarBody
+                name={punishment.banned_by_name}
+                uuid={punishment.banned_by_uuid}
+                console={punishment.console}
+                className="drop-shadow-xl group-hover:scale-105 md:h-[312px]"
+              />
+              <AvatarBust
+                name={punishment.banned_by_name}
+                uuid={punishment.banned_by_uuid}
+                console={punishment.console}
+                className="drop-shadow-xl group-hover:scale-105"
+              />
+            </div>
+          </Link>
+          <div className="flex items-center gap-2 rounded-full border bg-muted/50 px-3 py-1">
+            {punishment.console ? (
+              <ConsoleAvatar name={punishment.banned_by_name!} size={24} className="!mx-0" />
+            ) : (
+              <SkinImage
+                src={`https://minotar.net/helm/${encodeURIComponent(getSkinId(punishment.banned_by_name, punishment.banned_by_uuid))}/128`}
+                fallbackSrc={siteConfig.defaultSkin.head}
+                alt={`${punishment.banned_by_name}'s avatar`}
+                width={24}
+                height={24}
+                className="rounded-sm"
+              />
+            )}
+            <p className="text-lg font-medium">{punishment.banned_by_name}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Punishment details (mobile) */}
+      <div className="mx-auto mt-6 w-full max-w-[350px] md:hidden">
+        <PunishmentDetails type={type} dictionary={dictionary} lang={lang} punishment={punishment} />
       </div>
     </div>
-  )
+  );
 }

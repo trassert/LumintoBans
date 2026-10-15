@@ -22,3 +22,19 @@ export type PunishmentListItem = {
   active: boolean | string
   type?: PunishmentType
 }
+
+// Sanitized punishment passed to the punishment info card. Fields that only
+// apply to some punishment types (until/status/warned) are optional.
+export type PunishmentInfo = {
+  uuid: string | null
+  name: string | null | undefined
+  banned_by_uuid: string | null
+  banned_by_name: string | null
+  console: boolean
+  reason: string | null
+  time: Date | string
+  until?: Date | string | number | bigint | null
+  status?: boolean
+  warned?: boolean
+  server?: string | null
+}

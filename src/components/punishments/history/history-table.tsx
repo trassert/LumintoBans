@@ -1,21 +1,9 @@
-"use server"
-
-import { Suspense } from "react";
-
 import { language } from "@/lib/language/dictionaries";
 import { getPunishmentCount } from "@/lib/punishment/punishment";
 
-import { Filters } from "@/components/table/filters";
-import { TablePagination } from "@/components/table/pagination";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { PunishmentTable } from "@/components/table/punishment-table";
 import { HistoryBodyData } from "@/components/punishments/history/history-body-data";
-import { HistoryBodySkeleton } from "@/components/punishments/history/history-body-skeleton";
-import {
-  Table,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { HistoryRowSkeleton } from "@/components/punishments/history/history-row-skeleton";
 
 interface HistoryTableProps {
   page: number;
@@ -23,41 +11,36 @@ interface HistoryTableProps {
   staff?: string;
 }
 
-export const HistoryTable = async ({ 
+export const HistoryTable = async ({
   page,
   player,
   staff
 }: HistoryTableProps) => {
 
   const { lang, dictionary } = await language();
-  const localDictionary = dictionary.pages.history;
+  const heads = dictionary.pages.history.table.heads;
 
-  const punishmentCount = await getPunishmentCount(player, staff).then(({ bans, mutes, warns, kicks }) => bans + mutes + warns + kicks);
-  const totalPages = Math.ceil(punishmentCount / 10);
+  const punishmentCount = await getPunishmentCount(player, staff)
+    .then(({ bans, mutes, warns, kicks }) => bans + mutes + warns + kicks);
 
   return (
-    <div className="space-y-2">
-      <Filters player={player} staff={staff} />
-      <ScrollArea className="shadow border-y lg:rounded-xl lg:border">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-muted/50">
-              <TableHead className="text-center">{localDictionary.table.heads.type}</TableHead>
-              <TableHead className="text-center !px-1">{localDictionary.table.heads.player}</TableHead>
-              <TableHead className="text-center !px-1">{localDictionary.table.heads.by}</TableHead>
-              <TableHead>{localDictionary.table.heads.reason}</TableHead>
-              <TableHead>{localDictionary.table.heads.date}</TableHead>
-              <TableHead>{localDictionary.table.heads.expires}</TableHead>
-              <TableHead></TableHead>
-            </TableRow>
-          </TableHeader>
-          <Suspense fallback={<HistoryBodySkeleton />}>
-            <HistoryBodyData language={lang} dictionary={dictionary} page={page} player={player} staff={staff} />
-          </Suspense>
-        </Table>
-        <ScrollBar className="md:hidden" orientation="horizontal" />
-      </ScrollArea>
-      <TablePagination actualPage={page} totalPages={totalPages} />
-    </div>
+    <PunishmentTable
+      page={page}
+      player={player}
+      staff={staff}
+      count={punishmentCount}
+      skeletonRow={HistoryRowSkeleton}
+      columns={[
+        { key: "type", head: heads.type, className: "text-center" },
+        { key: "player", head: heads.player, className: "text-center !px-1" },
+        { key: "by", head: heads.by, className: "text-center !px-1" },
+        { key: "reason", head: heads.reason },
+        { key: "date", head: heads.date },
+        { key: "expires", head: heads.expires },
+        { key: "info" }
+      ]}
+    >
+      <HistoryBodyData language={lang} dictionary={dictionary} page={page} player={player} staff={staff} />
+    </PunishmentTable>
   );
 };

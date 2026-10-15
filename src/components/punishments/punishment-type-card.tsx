@@ -50,7 +50,6 @@ export const PunishmentTypeCard = ({
           />
           <CardTitle className="text-2xl font-medium">{title}</CardTitle>
         </CardContent>
-        <div className="hover-bg"></div>
       </Card>
     </Link>
   )

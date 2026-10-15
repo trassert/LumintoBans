@@ -11,11 +11,18 @@ export const siteConfig = {
   console: {
     name: "Консоль", // Just for filter badge
     uuid: "[Console]", // Use for filter url and to check if a punishment is made from the Console. In some versions of Litebans, the console uuid is "CONSOLE".
-    icon: "/console.webp",
-    body: "/console-body.webp",
-    bust: "/console-bust.webp",
+    icon: "/bans/console.webp",
+    body: "/bans/console-body.webp",
+    bust: "/bans/console-bust.webp",
   },
   defaultPlayerLookup: "Trassert",
+  // Default skin shown when the skin service can't resolve a player.
+  // Paths include the basePath, same as logo/favicon above.
+  defaultSkin: {
+    head: "/bans/steve-head.png",
+    body: "/bans/steve-body.png",
+    bust: "/bans/steve-bust.png",
+  },
   // When enabled, body and bust images will show a steve skin
   bedrock: {
     enabled: false,
@@ -152,4 +159,3 @@ export const siteConfig = {
     }
   }
 }
-export type SiteConfig = typeof siteConfig;

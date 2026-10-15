@@ -15,17 +15,23 @@ import { WebsiteLogo } from "@/components/images/website-logo"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 interface MobileNavProps {
-  dictionaries: Record<string, any>,
   bans: number;
   mutes: number;
   warns: number;
   kicks: number;
 }
 
-export const MobileNav = ({ dictionaries, bans, mutes, warns, kicks}: MobileNavProps) => {
+export const MobileNav = ({ bans, mutes, warns, kicks}: MobileNavProps) => {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
   const { dictionary } = useLang()
+
+  const sections = [
+    { href: "/bans", label: dictionary.words.bans.plural, count: bans },
+    { href: "/mutes", label: dictionary.words.mutes.plural, count: mutes },
+    { href: "/warns", label: dictionary.words.warns.plural, count: warns },
+    { href: "/kicks", label: dictionary.words.kicks.plural, count: kicks }
+  ]
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -81,37 +87,20 @@ export const MobileNav = ({ dictionaries, bans, mutes, warns, kicks}: MobileNavP
         </MobileLink>
         <ScrollArea className="my-4 pl-6">
           <nav className="flex flex-col space-y-3">
-          <MobileLink 
-            href="/bans"
-            className={cn("transition-colors pr-12 inline-flex w-full", pathname.startsWith("/bans") ? "hover:text-foreground text-foreground/80" : "hover:text-foreground/80 text-foreground/60")}
-            onOpenChange={setOpen}
-          >
-            {dictionary.words.bans.plural}<Badge variant={pathname.startsWith("/bans") ? "default" : "secondary"} className="!px-1 !py-0 ml-auto">{bans}</Badge>
-          </MobileLink>
+            {sections.map(({ href, label, count }) => {
+              const active = pathname.startsWith(href)
 
-          <MobileLink 
-            href="/mutes"
-            className={cn("transition-colors pr-12 inline-flex w-full", pathname.startsWith("/bans") ? "hover:text-foreground text-foreground/80" : "hover:text-foreground/80 text-foreground/60")}
-            onOpenChange={setOpen}
-          >
-            {dictionary.words.mutes.plural} <Badge variant={pathname.startsWith("/mutes") ? "default" : "secondary"} className="!px-1 !py-0 ml-auto">{mutes}</Badge>
-          </MobileLink>
-          
-          <MobileLink 
-            href="/warns"
-            className={cn("transition-colors pr-12 inline-flex w-full", pathname.startsWith("/bans") ? "hover:text-foreground text-foreground/80" : "hover:text-foreground/80 text-foreground/60")}
-            onOpenChange={setOpen}
-          >
-            {dictionary.words.warns.plural} <Badge variant={pathname.startsWith("/warns") ? "default" : "secondary"} className="!px-1 !py-0 ml-auto">{warns}</Badge>
-          </MobileLink>
-          
-          <MobileLink 
-            href="/kicks"
-            className={cn("transition-colors pr-12 inline-flex w-full", pathname.startsWith("/bans") ? "hover:text-foreground text-foreground/80" : "hover:text-foreground/80 text-foreground/60")}
-            onOpenChange={setOpen}
-          >
-            {dictionary.words.kicks.plural} <Badge variant={pathname.startsWith("/kicks") ? "default" : "secondary"} className="!px-1 !py-0 ml-auto">{kicks}</Badge>
-          </MobileLink>
+              return (
+                <MobileLink
+                  key={href}
+                  href={href}
+                  className={cn("transition-colors pr-12 inline-flex w-full", active ? "hover:text-foreground text-foreground/80" : "hover:text-foreground/80 text-foreground/60")}
+                  onOpenChange={setOpen}
+                >
+                  {label}<Badge variant={active ? "default" : "secondary"} className="!px-1 !py-0 ml-auto">{count}</Badge>
+                </MobileLink>
+              )
+            })}
           </nav>
         </ScrollArea>
       </SheetContent>

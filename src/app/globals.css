@@ -70,10 +70,24 @@
   * {
     @apply border-border;
   }
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
   td, th {
     @apply !px-2;
+  }
+  ::selection {
+    @apply bg-foreground/15;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent;
   }
 }

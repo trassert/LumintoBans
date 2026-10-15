@@ -18,20 +18,23 @@ export const DefaultPage = ({
   children,
 }: DefaultPageProps) => {
   return (
-    <>
-      <div className={cn("flex h-full flex-col items-center gap-4 py-8 md:py-12 md:pb-8 lg:py-18", padding)}>
-        <h1 className="text-center text-5xl font-bold leading-tight tracking-tighter sm:text-6xl lg:leading-[1.1]">
-          {title}
-        </h1>
+    <div className={cn("relative flex h-full flex-col items-center gap-4 py-8 md:py-12 md:pb-8 lg:py-18", padding)}>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-muted/50 to-transparent"
+      />
 
-        <Balance className="max-w-[750px] text-lg text-muted-foreground sm:text-xl text-center">
-          {description}
-        </Balance>
+      <h1 className="text-gradient text-center text-5xl font-bold leading-tight tracking-tighter sm:text-6xl lg:leading-[1.1]">
+        {title}
+      </h1>
 
-        <section className={className}>
-          {children}
-        </section>
-      </div>
-    </>
+      <Balance className="max-w-[750px] text-lg text-muted-foreground sm:text-xl text-center">
+        {description}
+      </Balance>
+
+      <section className={className}>
+        {children}
+      </section>
+    </div>
   );
-}
+};

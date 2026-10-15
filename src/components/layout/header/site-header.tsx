@@ -16,7 +16,7 @@ export const SiteHeader = async () => {
   return(
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 max-w-screen-2xl items-center space-x-1 px-4">
-        <MobileNav bans={bans} mutes={mutes} warns={warns} kicks={kicks} dictionaries={dictionaries} />
+        <MobileNav bans={bans} mutes={mutes} warns={warns} kicks={kicks} />
         <MainNav bans={bans} mutes={mutes} warns={warns} kicks={kicks} />
         <div className="flex flex-1 justify-end">
           <nav className="flex items-center space-x-1">
